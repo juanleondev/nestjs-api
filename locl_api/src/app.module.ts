@@ -17,6 +17,7 @@ import { AffiliatedCommunitiesModule } from './affiliated-communities/affiliated
 import { PostReactionsModule } from './post-reactions/post-reactions.module';
 import { PostCommentLikesModule } from './post-comment-likes/post-comment-likes.module';
 import { UsersPrivateModule } from './users-private/users-private.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { UsersPrivateModule } from './users-private/users-private.module';
     PostReactionsModule,
     PostCommentLikesModule,
     UsersPrivateModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

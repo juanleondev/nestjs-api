@@ -123,7 +123,6 @@ export class AuthService {
                         this.configService.get<string>('USE_FIREBASE_EMULATOR') === 'true';
       
       const apiKey = isEmulator ? 'demo-key' : this.configService.get<string>('FIREBASE_API_KEY');
-      const projectId = isEmulator ? 'demo-project' : this.configService.get<string>('FIREBASE_PROJECT_ID');
       
       const baseUrl = isEmulator 
         ? 'http://127.0.0.1:9099/identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=fake-api-key' 

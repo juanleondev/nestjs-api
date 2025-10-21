@@ -20,26 +20,14 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'uuid', nullable: true })
-  instance_id: string;
-
   @Column({ type: 'jsonb', nullable: true })
   profile_image: any;
 
   @Column({ type: 'text' })
   first_name: string;
 
-  @Column({ type: 'varchar', length: 255, nullable: true })
-  aud: string;
-
-  @Column({ type: 'varchar', length: 255, nullable: true })
-  role: string;
-
   @Column({ type: 'text' })
   last_name: string;
-
-  @Column({ type: 'varchar', length: 255, nullable: true })
-  email: string;
 
   @CreateDateColumn({ 
     type: 'timestamp with time zone',
@@ -51,17 +39,8 @@ export class User {
   @Column({ type: 'varchar', length: 128, nullable: true })
   auth_uid: string;
 
-  @Column({ type: 'varchar', length: 255, nullable: true })
-  encrypted_password: string;
-
-  @Column({ type: 'timestamp with time zone', nullable: true })
-  email_confirmed_at: Date;
-
   @Column({ type: 'boolean', default: false })
   banned: boolean;
-
-  @Column({ type: 'timestamp with time zone', nullable: true })
-  invited_at: Date;
 
   @Column({ type: 'boolean', default: false })
   deleted: boolean;
@@ -69,17 +48,8 @@ export class User {
   @Column({ type: 'boolean', default: false })
   disabled: boolean;
 
-  @Column({ type: 'varchar', length: 255, nullable: true })
-  confirmation_token: string;
-
   @Column({ type: 'varchar', nullable: true })
   username: string;
-
-  @Column({ type: 'timestamp with time zone', nullable: true })
-  confirmation_sent_at: Date;
-
-  @Column({ type: 'varchar', length: 255, nullable: true })
-  recovery_token: string;
 
   @UpdateDateColumn({ 
     type: 'timestamp with time zone',
@@ -87,14 +57,8 @@ export class User {
   })
   updated_at: Date;
 
-  @Column({ type: 'timestamp with time zone', nullable: true })
-  recovery_sent_at: Date;
-
   @Column({ type: 'text', nullable: true })
   about_text: string;
-
-  @Column({ type: 'varchar', length: 255, nullable: true })
-  email_change_token_new: string;
 
   @Column({ type: 'jsonb', nullable: true })
   banner_image: any;
@@ -106,71 +70,11 @@ export class User {
   })
   visibility: UserVisibility;
 
-  @Column({ type: 'varchar', length: 255, nullable: true })
-  email_change: string;
-
   @Column({ type: 'varchar', nullable: true })
   short_bio: string;
 
-  @Column({ type: 'timestamp with time zone', nullable: true })
-  email_change_sent_at: Date;
-
-  @Column({ type: 'timestamp with time zone', nullable: true })
-  last_sign_in_at: Date;
-
-  @Column({ type: 'boolean', default: false })
+  @Column({ type: 'boolean', default: true })
   activity_tab_public_enabled: boolean;
-
-  @Column({ type: 'jsonb', nullable: true })
-  raw_app_meta_data: any;
-
-  @Column({ type: 'jsonb', nullable: true })
-  raw_user_meta_data: any;
-
-  @Column({ type: 'boolean', nullable: true })
-  is_super_admin: boolean;
-
-  @Column({ type: 'text', nullable: true })
-  phone: string;
-
-  @Column({ type: 'timestamp with time zone', nullable: true })
-  phone_confirmed_at: Date;
-
-  @Column({ type: 'text', nullable: true })
-  phone_change: string;
-
-  @Column({ type: 'varchar', length: 255, nullable: true })
-  phone_change_token: string;
-
-  @Column({ type: 'timestamp with time zone', nullable: true })
-  phone_change_sent_at: Date;
-
-  @Column({ type: 'timestamp with time zone', nullable: true })
-  confirmed_at: Date;
-
-  @Column({ type: 'varchar', length: 255, nullable: true })
-  email_change_token_current: string;
-
-  @Column({ type: 'smallint', nullable: true })
-  email_change_confirm_status: number;
-
-  @Column({ type: 'timestamp with time zone', nullable: true })
-  banned_until: Date;
-
-  @Column({ type: 'varchar', length: 255, nullable: true })
-  reauthentication_token: string;
-
-  @Column({ type: 'timestamp with time zone', nullable: true })
-  reauthentication_sent_at: Date;
-
-  @Column({ type: 'boolean', default: false })
-  is_sso_user: boolean;
-
-  @Column({ type: 'timestamp with time zone', nullable: true })
-  deleted_at: Date;
-
-  @Column({ type: 'boolean', default: false })
-  is_anonymous: boolean;
 
   // Relationships
   @OneToMany(() => Community, community => community.original_creator)

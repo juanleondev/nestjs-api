@@ -1,4 +1,13 @@
-import { Controller, Post, Body, HttpCode, HttpStatus, UseGuards, Get, Request } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  HttpCode,
+  HttpStatus,
+  UseGuards,
+  Get,
+  Request,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { FirebaseTokenDto } from './dto/firebase-token.dto';
@@ -17,7 +26,9 @@ export class AuthController {
 
   @Post('login-with-token')
   @HttpCode(HttpStatus.OK)
-  async loginWithFirebaseToken(@Body() firebaseTokenDto: FirebaseTokenDto): Promise<AuthResponseDto> {
+  async loginWithFirebaseToken(
+    @Body() firebaseTokenDto: FirebaseTokenDto,
+  ): Promise<AuthResponseDto> {
     return this.authService.loginWithFirebaseToken(firebaseTokenDto);
   }
 

@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { Community } from '../../communities/entities/community.entity';
 import { User } from '../../users/entities/user.entity';
 
@@ -6,7 +14,7 @@ export enum AffiliationStatus {
   PENDING = 'PENDING',
   ACCEPTED = 'ACCEPTED',
   REJECTED = 'REJECTED',
-  CANCELLED = 'CANCELLED'
+  CANCELLED = 'CANCELLED',
 }
 
 @Entity('affiliated_communities')
@@ -23,22 +31,22 @@ export class AffiliatedCommunity {
   @Column({ type: 'uuid' })
   requester_user_id: string;
 
-  @Column({ 
+  @Column({
     type: 'enum',
     enum: AffiliationStatus,
-    default: AffiliationStatus.PENDING
+    default: AffiliationStatus.PENDING,
   })
   status: AffiliationStatus;
 
-  @CreateDateColumn({ 
+  @CreateDateColumn({
     type: 'timestamp with time zone',
-    default: () => 'now()'
+    default: () => 'now()',
   })
   created_at: Date;
 
-  @UpdateDateColumn({ 
+  @UpdateDateColumn({
     type: 'timestamp with time zone',
-    default: () => 'now()'
+    default: () => 'now()',
   })
   updated_at: Date;
 
@@ -55,15 +63,15 @@ export class AffiliatedCommunity {
   message: string;
 
   // Foreign key relationships
-  @ManyToOne(() => Community, community => community.requested_affiliations)
+  @ManyToOne(() => Community, (community) => community.requested_affiliations)
   @JoinColumn({ name: 'requester_community_id' })
   requester_community: Community;
 
-  @ManyToOne(() => Community, community => community.received_affiliations)
+  @ManyToOne(() => Community, (community) => community.received_affiliations)
   @JoinColumn({ name: 'target_community_id' })
   target_community: Community;
 
-  @ManyToOne(() => User, user => user.requested_affiliations)
+  @ManyToOne(() => User, (user) => user.requested_affiliations)
   @JoinColumn({ name: 'requester_user_id' })
   requester_user: User;
 }

@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  OneToMany,
+} from 'typeorm';
 import { Community } from '../../communities/entities/community.entity';
 
 @Entity('places')
@@ -6,17 +12,17 @@ export class Place {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ 
+  @Column({
     type: 'geography',
     spatialFeatureType: 'Point',
-    srid: 4326
+    srid: 4326,
   })
   geopoint: any; // PostGIS Point type
 
-  @CreateDateColumn({ 
+  @CreateDateColumn({
     type: 'timestamp with time zone',
     nullable: true,
-    default: () => 'now()'
+    default: () => 'now()',
   })
   created_at: Date;
 
@@ -36,6 +42,6 @@ export class Place {
   firestore_id: string;
 
   // Relationships
-  @OneToMany(() => Community, community => community.place)
+  @OneToMany(() => Community, (community) => community.place)
   communities: Community[];
 }

@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
+} from 'typeorm';
 import { Community } from '../../communities/entities/community.entity';
 import { Post } from '../../posts/entities/post.entity';
 import { PostComment } from '../../post-comments/entities/post-comment.entity';
@@ -12,7 +19,7 @@ import { CommunityTag } from '../../community-tags/entities/community-tag.entity
 export enum UserVisibility {
   PUBLIC = 'public',
   PRIVATE = 'private',
-  HIDDEN = 'hidden'
+  HIDDEN = 'hidden',
 }
 
 @Entity('users')
@@ -29,10 +36,10 @@ export class User {
   @Column({ type: 'text' })
   last_name: string;
 
-  @CreateDateColumn({ 
+  @CreateDateColumn({
     type: 'timestamp with time zone',
     nullable: true,
-    default: () => 'now()'
+    default: () => 'now()',
   })
   created_at: Date;
 
@@ -51,9 +58,9 @@ export class User {
   @Column({ type: 'varchar', nullable: true })
   username: string;
 
-  @UpdateDateColumn({ 
+  @UpdateDateColumn({
     type: 'timestamp with time zone',
-    default: () => 'now()'
+    default: () => 'now()',
   })
   updated_at: Date;
 
@@ -63,10 +70,10 @@ export class User {
   @Column({ type: 'jsonb', nullable: true })
   banner_image: any;
 
-  @Column({ 
+  @Column({
     type: 'enum',
     enum: UserVisibility,
-    default: UserVisibility.PUBLIC
+    default: UserVisibility.PUBLIC,
   })
   visibility: UserVisibility;
 
@@ -77,33 +84,36 @@ export class User {
   activity_tab_public_enabled: boolean;
 
   // Relationships
-  @OneToMany(() => Community, community => community.original_creator)
+  @OneToMany(() => Community, (community) => community.original_creator)
   created_communities: Community[];
 
-  @OneToMany(() => Post, post => post.user)
+  @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
 
-  @OneToMany(() => PostComment, comment => comment.user)
+  @OneToMany(() => PostComment, (comment) => comment.user)
   comments: PostComment[];
 
-  @OneToMany(() => CommunityMember, member => member.user)
+  @OneToMany(() => CommunityMember, (member) => member.user)
   community_memberships: CommunityMember[];
 
-  @OneToMany(() => Connection, connection => connection.inviter)
+  @OneToMany(() => Connection, (connection) => connection.inviter)
   sent_connections: Connection[];
 
-  @OneToMany(() => Connection, connection => connection.accepter)
+  @OneToMany(() => Connection, (connection) => connection.accepter)
   received_connections: Connection[];
 
-  @OneToMany(() => AffiliatedCommunity, affiliation => affiliation.requester_user)
+  @OneToMany(
+    () => AffiliatedCommunity,
+    (affiliation) => affiliation.requester_user,
+  )
   requested_affiliations: AffiliatedCommunity[];
 
-  @OneToMany(() => PostReaction, reaction => reaction.user)
+  @OneToMany(() => PostReaction, (reaction) => reaction.user)
   post_reactions: PostReaction[];
 
-  @OneToMany(() => PostCommentLike, like => like.user)
+  @OneToMany(() => PostCommentLike, (like) => like.user)
   comment_likes: PostCommentLike[];
 
-  @OneToMany(() => CommunityTag, tag => tag.creator)
+  @OneToMany(() => CommunityTag, (tag) => tag.creator)
   created_tags: CommunityTag[];
 }

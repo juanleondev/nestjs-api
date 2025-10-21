@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 
 @Entity('community_tags')
@@ -9,10 +16,10 @@ export class CommunityTag {
   @Column({ type: 'text' })
   name: string;
 
-  @CreateDateColumn({ 
+  @CreateDateColumn({
     type: 'timestamp with time zone',
     nullable: true,
-    default: () => 'now()'
+    default: () => 'now()',
   })
   created_at: Date;
 
@@ -23,7 +30,7 @@ export class CommunityTag {
   disabled: boolean;
 
   // Foreign key relationships
-  @ManyToOne(() => User, user => user.created_tags)
+  @ManyToOne(() => User, (user) => user.created_tags)
   @JoinColumn({ name: 'creator_id' })
   creator: User;
 }

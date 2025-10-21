@@ -16,7 +16,10 @@ export class AffiliatedCommunitiesService {
     return `This action returns a #${id} affiliatedCommunity`;
   }
 
-  update(id: number, updateAffiliatedCommunityDto: UpdateAffiliatedCommunityDto) {
+  update(
+    id: number,
+    updateAffiliatedCommunityDto: UpdateAffiliatedCommunityDto,
+  ) {
     return `This action updates a #${id} affiliatedCommunity`;
   }
 

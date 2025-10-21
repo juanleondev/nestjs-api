@@ -1,15 +1,27 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { AffiliatedCommunitiesService } from './affiliated-communities.service';
 import { CreateAffiliatedCommunityDto } from './dto/create-affiliated-community.dto';
 import { UpdateAffiliatedCommunityDto } from './dto/update-affiliated-community.dto';
 
 @Controller('affiliated-communities')
 export class AffiliatedCommunitiesController {
-  constructor(private readonly affiliatedCommunitiesService: AffiliatedCommunitiesService) {}
+  constructor(
+    private readonly affiliatedCommunitiesService: AffiliatedCommunitiesService,
+  ) {}
 
   @Post()
   create(@Body() createAffiliatedCommunityDto: CreateAffiliatedCommunityDto) {
-    return this.affiliatedCommunitiesService.create(createAffiliatedCommunityDto);
+    return this.affiliatedCommunitiesService.create(
+      createAffiliatedCommunityDto,
+    );
   }
 
   @Get()
@@ -23,8 +35,14 @@ export class AffiliatedCommunitiesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAffiliatedCommunityDto: UpdateAffiliatedCommunityDto) {
-    return this.affiliatedCommunitiesService.update(+id, updateAffiliatedCommunityDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateAffiliatedCommunityDto: UpdateAffiliatedCommunityDto,
+  ) {
+    return this.affiliatedCommunitiesService.update(
+      +id,
+      updateAffiliatedCommunityDto,
+    );
   }
 
   @Delete(':id')

@@ -1,4 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+  OneToMany,
+} from 'typeorm';
 import { Place } from '../../places/entities/place.entity';
 import { User } from '../../users/entities/user.entity';
 import { Post } from '../../posts/entities/post.entity';
@@ -8,7 +17,7 @@ import { AffiliatedCommunity } from '../../affiliated-communities/entities/affil
 export enum CommunityVisibility {
   PUBLIC = 'public',
   PRIVATE = 'private',
-  HIDDEN = 'hidden'
+  HIDDEN = 'hidden',
 }
 
 export enum CommunityType {
@@ -28,7 +37,7 @@ export enum CommunityType {
   EDUCATION_AND_LEARNING = 'EDUCATION_AND_LEARNING',
   ENTERTAINMENT = 'ENTERTAINMENT',
   HOBBIES_AND_INTERESTS = 'HOBBIES_AND_INTERESTS',
-  POLITICS_AND_CIVICS = 'POLITICS_AND_CIVICS'
+  POLITICS_AND_CIVICS = 'POLITICS_AND_CIVICS',
 }
 
 @Entity('communities')
@@ -51,10 +60,10 @@ export class Community {
   @Column({ type: 'boolean', nullable: true, default: false })
   disabled: boolean;
 
-  @CreateDateColumn({ 
+  @CreateDateColumn({
     type: 'timestamp with time zone',
     nullable: true,
-    default: () => 'now()'
+    default: () => 'now()',
   })
   created_at: Date;
 
@@ -85,10 +94,10 @@ export class Community {
   @Column({ type: 'uuid', nullable: true })
   original_creator_id: string;
 
-  @Column({ 
+  @Column({
     type: 'enum',
     enum: CommunityVisibility,
-    default: CommunityVisibility.PUBLIC
+    default: CommunityVisibility.PUBLIC,
   })
   visibility: CommunityVisibility;
 
@@ -98,16 +107,16 @@ export class Community {
   @Column({ type: 'jsonb', nullable: true })
   socials: any;
 
-  @UpdateDateColumn({ 
+  @UpdateDateColumn({
     type: 'timestamp with time zone',
-    default: () => 'now() AT TIME ZONE \'utc\''
+    default: () => "now() AT TIME ZONE 'utc'",
   })
   updated_at: Date;
 
-  @Column({ 
+  @Column({
     type: 'enum',
     enum: CommunityType,
-    default: CommunityType.UNKNOWN_COMMUNITY_TYPE
+    default: CommunityType.UNKNOWN_COMMUNITY_TYPE,
   })
   type: CommunityType;
 
@@ -133,15 +142,21 @@ export class Community {
   original_creator: User;
 
   // One-to-many relationships
-  @OneToMany(() => Post, post => post.community)
+  @OneToMany(() => Post, (post) => post.community)
   posts: Post[];
 
-  @OneToMany(() => CommunityMember, member => member.community)
+  @OneToMany(() => CommunityMember, (member) => member.community)
   members: CommunityMember[];
 
-  @OneToMany(() => AffiliatedCommunity, affiliation => affiliation.requester_community)
+  @OneToMany(
+    () => AffiliatedCommunity,
+    (affiliation) => affiliation.requester_community,
+  )
   requested_affiliations: AffiliatedCommunity[];
 
-  @OneToMany(() => AffiliatedCommunity, affiliation => affiliation.target_community)
+  @OneToMany(
+    () => AffiliatedCommunity,
+    (affiliation) => affiliation.target_community,
+  )
   received_affiliations: AffiliatedCommunity[];
 }

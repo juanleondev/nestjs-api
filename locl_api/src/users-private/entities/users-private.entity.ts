@@ -1,4 +1,11 @@
-import { Entity, PrimaryColumn, Column, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryColumn,
+  Column,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { Place } from '../../places/entities/place.entity';
 
@@ -31,9 +38,9 @@ export class UsersPrivate {
   @Column({ type: 'boolean', default: false })
   phone_verified: boolean;
 
-  @UpdateDateColumn({ 
+  @UpdateDateColumn({
     type: 'timestamp with time zone',
-    default: () => 'now()'
+    default: () => 'now()',
   })
   updated_at: Date;
 

@@ -1,4 +1,11 @@
-import { Entity, PrimaryColumn, Column, CreateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryColumn,
+  Column,
+  CreateDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { Post } from '../../posts/entities/post.entity';
 import { Emoji } from '../../emojis/entities/emoji.entity';
@@ -14,23 +21,23 @@ export class PostReaction {
   @PrimaryColumn({ type: 'uuid' })
   emoji_id: string;
 
-  @CreateDateColumn({ 
+  @CreateDateColumn({
     type: 'timestamp with time zone',
     nullable: true,
-    default: () => 'now()'
+    default: () => 'now()',
   })
   created_at: Date;
 
   // Foreign key relationships
-  @ManyToOne(() => User, user => user.post_reactions)
+  @ManyToOne(() => User, (user) => user.post_reactions)
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @ManyToOne(() => Post, post => post.reactions)
+  @ManyToOne(() => Post, (post) => post.reactions)
   @JoinColumn({ name: 'post_id' })
   post: Post;
 
-  @ManyToOne(() => Emoji, emoji => emoji.reactions)
+  @ManyToOne(() => Emoji, (emoji) => emoji.reactions)
   @JoinColumn({ name: 'emoji_id' })
   emoji: Emoji;
 }

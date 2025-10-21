@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { CommunityTagsService } from './community-tags.service';
 import { CreateCommunityTagDto } from './dto/create-community-tag.dto';
 import { UpdateCommunityTagDto } from './dto/update-community-tag.dto';
@@ -23,7 +31,10 @@ export class CommunityTagsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCommunityTagDto: UpdateCommunityTagDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateCommunityTagDto: UpdateCommunityTagDto,
+  ) {
     return this.communityTagsService.update(+id, updateCommunityTagDto);
   }
 

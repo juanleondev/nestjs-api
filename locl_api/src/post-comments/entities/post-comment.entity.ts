@@ -1,4 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+  OneToMany,
+} from 'typeorm';
 import { Post } from '../../posts/entities/post.entity';
 import { User } from '../../users/entities/user.entity';
 import { Community } from '../../communities/entities/community.entity';
@@ -24,17 +33,17 @@ export class PostComment {
   @Column({ type: 'text', array: true, nullable: true })
   media_urls: string[];
 
-  @CreateDateColumn({ 
+  @CreateDateColumn({
     type: 'timestamp with time zone',
     nullable: true,
-    default: () => 'now()'
+    default: () => 'now()',
   })
   created_at: Date;
 
-  @UpdateDateColumn({ 
+  @UpdateDateColumn({
     type: 'timestamp with time zone',
     nullable: true,
-    default: () => 'now()'
+    default: () => 'now()',
   })
   updated_at: Date;
 
@@ -57,19 +66,19 @@ export class PostComment {
   firestore_id: string;
 
   // Foreign key relationships
-  @ManyToOne(() => Post, post => post.comments)
+  @ManyToOne(() => Post, (post) => post.comments)
   @JoinColumn({ name: 'post_id' })
   post: Post;
 
-  @ManyToOne(() => User, user => user.comments)
+  @ManyToOne(() => User, (user) => user.comments)
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @ManyToOne(() => Community, community => community.posts)
+  @ManyToOne(() => Community, (community) => community.posts)
   @JoinColumn({ name: 'community_id' })
   community: Community;
 
   // One-to-many relationships
-  @OneToMany(() => PostCommentLike, like => like.post_comment)
+  @OneToMany(() => PostCommentLike, (like) => like.post_comment)
   likes: PostCommentLike[];
 }

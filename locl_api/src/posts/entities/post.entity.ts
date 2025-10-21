@@ -1,4 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+  OneToMany,
+} from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { Community } from '../../communities/entities/community.entity';
 import { PostComment } from '../../post-comments/entities/post-comment.entity';
@@ -12,7 +21,7 @@ export enum PostType {
   LINK = 'LINK',
   POLL = 'POLL',
   EVENT = 'EVENT',
-  ANNOUNCEMENT = 'ANNOUNCEMENT'
+  ANNOUNCEMENT = 'ANNOUNCEMENT',
 }
 
 @Entity('posts')
@@ -26,10 +35,10 @@ export class Post {
   @Column({ type: 'uuid' })
   community_id: string;
 
-  @Column({ 
+  @Column({
     type: 'enum',
     enum: PostType,
-    default: PostType.TEXT
+    default: PostType.TEXT,
   })
   post_type: PostType;
 
@@ -39,17 +48,17 @@ export class Post {
   @Column({ type: 'text', array: true, nullable: true })
   media_urls: string[];
 
-  @CreateDateColumn({ 
+  @CreateDateColumn({
     type: 'timestamp with time zone',
     nullable: true,
-    default: () => 'now()'
+    default: () => 'now()',
   })
   created_at: Date;
 
-  @UpdateDateColumn({ 
+  @UpdateDateColumn({
     type: 'timestamp with time zone',
     nullable: true,
-    default: () => 'now()'
+    default: () => 'now()',
   })
   updated_at: Date;
 
@@ -111,29 +120,29 @@ export class Post {
   tags: string[];
 
   // Foreign key relationships
-  @ManyToOne(() => User, user => user.posts)
+  @ManyToOne(() => User, (user) => user.posts)
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @ManyToOne(() => Community, community => community.posts)
+  @ManyToOne(() => Community, (community) => community.posts)
   @JoinColumn({ name: 'community_id' })
   community: Community;
 
-  @ManyToOne(() => Post, post => post.replies, { nullable: true })
+  @ManyToOne(() => Post, (post) => post.replies, { nullable: true })
   @JoinColumn({ name: 'parent_id' })
   parent: Post;
 
-  @ManyToOne(() => Post, post => post.root, { nullable: true })
+  @ManyToOne(() => Post, (post) => post.root, { nullable: true })
   @JoinColumn({ name: 'root_post_id' })
   root: Post;
 
   // One-to-many relationships
-  @OneToMany(() => Post, post => post.parent)
+  @OneToMany(() => Post, (post) => post.parent)
   replies: Post[];
 
-  @OneToMany(() => PostComment, comment => comment.post)
+  @OneToMany(() => PostComment, (comment) => comment.post)
   comments: PostComment[];
 
-  @OneToMany(() => PostReaction, reaction => reaction.post)
+  @OneToMany(() => PostReaction, (reaction) => reaction.post)
   reactions: PostReaction[];
 }

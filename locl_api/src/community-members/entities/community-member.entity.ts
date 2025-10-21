@@ -6,7 +6,7 @@ export enum CommunityMemberRole {
   MEMBER = 'MEMBER',
   MODERATOR = 'MODERATOR',
   ADMIN = 'ADMIN',
-  OWNER = 'OWNER'
+  OWNER = 'OWNER',
 }
 
 @Entity('community_members')
@@ -26,10 +26,10 @@ export class CommunityMember {
   @Column({ type: 'boolean', nullable: true, default: false })
   disabled: boolean;
 
-  @Column({ 
+  @Column({
     type: 'timestamp with time zone',
     nullable: true,
-    default: () => 'now()'
+    default: () => 'now()',
   })
   joined_at: Date;
 
@@ -39,10 +39,10 @@ export class CommunityMember {
   @Column({ type: 'boolean', default: false })
   is_pinned: boolean;
 
-  @Column({ 
+  @Column({
     type: 'enum',
     enum: CommunityMemberRole,
-    default: CommunityMemberRole.MEMBER
+    default: CommunityMemberRole.MEMBER,
   })
   role: CommunityMemberRole;
 
@@ -50,11 +50,11 @@ export class CommunityMember {
   hide_membership_from_non_members: boolean;
 
   // Foreign key relationships
-  @ManyToOne(() => User, user => user.community_memberships)
+  @ManyToOne(() => User, (user) => user.community_memberships)
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @ManyToOne(() => Community, community => community.members)
+  @ManyToOne(() => Community, (community) => community.members)
   @JoinColumn({ name: 'community_id' })
   community: Community;
 }

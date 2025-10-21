@@ -1,11 +1,19 @@
-import { Entity, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 
 export enum ConnectionStatus {
   PENDING = 'PENDING',
   ACCEPTED = 'ACCEPTED',
   REJECTED = 'REJECTED',
-  BLOCKED = 'BLOCKED'
+  BLOCKED = 'BLOCKED',
 }
 
 @Entity('connections')
@@ -16,31 +24,31 @@ export class Connection {
   @PrimaryColumn({ type: 'uuid' })
   inviter_id: string;
 
-  @Column({ 
+  @Column({
     type: 'enum',
     enum: ConnectionStatus,
-    default: ConnectionStatus.PENDING
+    default: ConnectionStatus.PENDING,
   })
   status: ConnectionStatus;
 
-  @CreateDateColumn({ 
+  @CreateDateColumn({
     type: 'timestamp with time zone',
-    default: () => 'now()'
+    default: () => 'now()',
   })
   created_at: Date;
 
-  @UpdateDateColumn({ 
+  @UpdateDateColumn({
     type: 'timestamp with time zone',
-    default: () => 'now()'
+    default: () => 'now()',
   })
   updated_at: Date;
 
   // Foreign key relationships
-  @ManyToOne(() => User, user => user.received_connections)
+  @ManyToOne(() => User, (user) => user.received_connections)
   @JoinColumn({ name: 'accepter_id' })
   accepter: User;
 
-  @ManyToOne(() => User, user => user.sent_connections)
+  @ManyToOne(() => User, (user) => user.sent_connections)
   @JoinColumn({ name: 'inviter_id' })
   inviter: User;
 }

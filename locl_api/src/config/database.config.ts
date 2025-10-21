@@ -13,7 +13,10 @@ export const databaseConfig = (): TypeOrmModuleOptions => ({
   migrations: [__dirname + '/../migrations/*{.ts,.js}'],
   migrationsRun: false,
   // Supabase specific configuration
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+  ssl:
+    process.env.NODE_ENV === 'production'
+      ? { rejectUnauthorized: false }
+      : false,
   extra: {
     // Connection pool configuration for Supabase
     max: parseInt(process.env.DB_POOL_SIZE, 10) || 10,

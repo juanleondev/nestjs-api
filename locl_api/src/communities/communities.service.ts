@@ -19,12 +19,12 @@ export class CommunitiesService {
 
   async findAll(): Promise<Community[]> {
     return await this.communityRepository.find({
-      relations: ['place', 'original_creator'] // Load related data
+      relations: ['place', 'original_creator'], // Load related data
     });
   }
 
   async findOne(id: string): Promise<Community> {
-    const community = await this.communityRepository.findOne({ 
+    const community = await this.communityRepository.findOne({
       where: { id },
     });
     if (!community) {
@@ -33,7 +33,10 @@ export class CommunitiesService {
     return community;
   }
 
-  async update(id: string, updateCommunityDto: UpdateCommunityDto): Promise<Community> {
+  async update(
+    id: string,
+    updateCommunityDto: UpdateCommunityDto,
+  ): Promise<Community> {
     const community = await this.findOne(id);
     Object.assign(community, updateCommunityDto);
     return await this.communityRepository.save(community);

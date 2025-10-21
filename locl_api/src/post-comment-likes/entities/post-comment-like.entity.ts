@@ -1,4 +1,11 @@
-import { Entity, PrimaryColumn, Column, CreateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryColumn,
+  Column,
+  CreateDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { PostComment } from '../../post-comments/entities/post-comment.entity';
 
@@ -10,18 +17,18 @@ export class PostCommentLike {
   @PrimaryColumn({ type: 'uuid' })
   post_comment_id: string;
 
-  @CreateDateColumn({ 
+  @CreateDateColumn({
     type: 'timestamp with time zone',
-    default: () => 'now()'
+    default: () => 'now()',
   })
   created_at: Date;
 
   // Foreign key relationships
-  @ManyToOne(() => User, user => user.comment_likes)
+  @ManyToOne(() => User, (user) => user.comment_likes)
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @ManyToOne(() => PostComment, comment => comment.likes)
+  @ManyToOne(() => PostComment, (comment) => comment.likes)
   @JoinColumn({ name: 'post_comment_id' })
   post_comment: PostComment;
 }

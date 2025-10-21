@@ -22,6 +22,6 @@ export class Emoji {
   firestore_id: string;
 
   // One-to-many relationships
-  @OneToMany(() => PostReaction, reaction => reaction.emoji)
+  @OneToMany(() => PostReaction, (reaction) => reaction.emoji)
   reactions: PostReaction[];
 }

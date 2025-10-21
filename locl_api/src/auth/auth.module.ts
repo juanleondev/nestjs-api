@@ -15,7 +15,7 @@ import { FirebaseConfig } from '../config/firebase.config';
       useFactory: (configService: ConfigService): JwtModuleOptions => {
         const secret = configService.get<string>('JWT_SECRET');
         const expiresIn = configService.get<string>('JWT_EXPIRATION') || '1h';
-        
+
         return {
           secret,
           signOptions: {

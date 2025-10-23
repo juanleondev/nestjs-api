@@ -7,10 +7,12 @@ import {
   Param,
   Delete,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { CommunitiesService } from './communities.service';
 import { CreateCommunityDto } from './dto/create-community.dto';
 import { UpdateCommunityDto } from './dto/update-community.dto';
+import { PaginationDto } from './dto/pagination.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('communities')
@@ -24,8 +26,8 @@ export class CommunitiesController {
   }
 
   @Get()
-  findAll() {
-    return this.communitiesService.findAll();
+  findAll(@Query() paginationDto: PaginationDto) {
+    return this.communitiesService.findAll(paginationDto);
   }
 
   @Get(':id')

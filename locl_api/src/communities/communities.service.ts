@@ -1,8 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, Like, Or, FindOptionsWhere } from 'typeorm';
 import { CreateCommunityDto } from './dto/create-community.dto';
 import { UpdateCommunityDto } from './dto/update-community.dto';
+import { PaginationDto } from './dto/pagination.dto';
+import { PaginatedResponseDto } from './dto/paginated-response.dto';
 import { Community } from './entities/community.entity';
 
 @Injectable()
@@ -17,10 +19,28 @@ export class CommunitiesService {
     return await this.communityRepository.save(community);
   }
 
-  async findAll(): Promise<Community[]> {
-    return await this.communityRepository.find({
+  async findAll(paginationDto?: PaginationDto): Promise<PaginatedResponseDto<Community>> {
+    const { limit = 10, offset = 0, search } = paginationDto || {};
+    
+    // Build search conditions if search query is provided
+    const whereConditions: FindOptionsWhere<Community>[] | undefined = search
+      ? [
+          { name: Like(`%${search}%`) },
+          { description: Like(`%${search}%`) },
+          { headline: Like(`%${search}%`) },
+          { domain_name: Like(`%${search}%`) },
+        ]
+      : undefined;
+
+    const [communities, total] = await this.communityRepository.findAndCount({
       relations: ['place', 'original_creator'], // Load related data
+      where: whereConditions,
+      take: limit,
+      skip: offset,
+      order: { created_at: 'DESC' }, // Order by creation date, newest first
     });
+
+    return new PaginatedResponseDto(communities, total, limit, offset);
   }
 
   async findOne(id: string): Promise<Community> {
